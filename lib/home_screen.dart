@@ -40,16 +40,17 @@ class HomeScreen extends StatelessWidget {
                           width: 96,
                           height: 96,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            width: 96,
-                            height: 96,
-                            color: Colors.grey[200],
-                            child: const Icon(
-                              Icons.photo,
-                              size: 48,
-                              color: Colors.grey,
-                            ),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                width: 96,
+                                height: 96,
+                                color: Colors.grey[200],
+                                child: const Icon(
+                                  Icons.photo,
+                                  size: 48,
+                                  color: Colors.grey,
+                                ),
+                              ),
                         ),
                       ),
                     ),
@@ -68,7 +69,9 @@ class HomeScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const TableScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) => const TableScreen(),
+                                ),
                               );
                             },
                             color: Colors.blue,
@@ -79,7 +82,9 @@ class HomeScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const AddScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) => const AddScreen(),
+                                ),
                               );
                             },
                             color: Colors.green,
@@ -89,18 +94,19 @@ class HomeScreen extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 40),
-                    SizedBox(
-                      width: 150,
-                      child: _PressableExportButton(),
-                    ),
+                    SizedBox(width: 150, child: _PressableExportButton()),
                   ],
                 ),
               ),
+            ),
 
             // Footer similar to Expo
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text('صنع بواسطة اياد دعدوش ومحمد اسماعيل', style: TextStyle(fontSize: 14, color: Colors.grey[700])),
+              child: Text(
+                'صنع بواسطة اياد دعدوش ومحمد اسماعيل',
+                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+              ),
             ),
           ],
         ),
@@ -179,11 +185,19 @@ class _IconTextButtonState extends State<IconTextButton>
                     ),
                   )
                 else
-                  Icon(widget.icon ?? Icons.image, size: 40, color: Colors.white),
+                  Icon(
+                    widget.icon ?? Icons.image,
+                    size: 40,
+                    color: Colors.white,
+                  ),
                 const SizedBox(height: 8),
                 Text(
                   widget.label,
-                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -213,7 +227,9 @@ class _PressableExportButtonState extends State<_PressableExportButton> {
         setState(() => _pressed = false);
         final success = await shareDatabase();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(success ? 'تم تصدير قاعدة البيانات' : 'فشل التصدير')),
+          SnackBar(
+            content: Text(success ? 'تم تصدير قاعدة البيانات' : 'فشل التصدير'),
+          ),
         );
       },
       onTapCancel: () => setState(() => _pressed = false),
@@ -229,11 +245,18 @@ class _PressableExportButtonState extends State<_PressableExportButton> {
               color: const Color(0xFF6C757D),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 6, offset: const Offset(0, 3)),
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
               ],
             ),
             alignment: Alignment.center,
-            child: const Text('تصدير قاعدة البيانات', style: TextStyle(color: Colors.white, fontSize: 16)),
+            child: const Text(
+              'تصدير قاعدة البيانات',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
           ),
         ),
       ),
