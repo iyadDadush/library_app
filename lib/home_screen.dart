@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:library_app/add_screen.dart';
 import 'package:library_app/table_screen.dart';
+import 'package:library_app/db/export_db.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -46,6 +47,22 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
+                const SizedBox(width: 20),
+                IconTextButton(
+                  icon: Icons.share,
+                  label: 'Export',
+                  onPressed: () async {
+                    final success = await shareDatabase();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          success ? 'Database exported' : 'Export failed',
+                        ),
+                      ),
+                    );
+                  },
+                  color: Colors.grey,
+                ),
               ],
             ),
           ],
@@ -82,16 +99,9 @@ class IconTextButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
 
         // ✔️ الشكل الصحيح للحدود الدائرية
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      child: Column(
-        children: [
-          Icon(icon, size: 40),
-          Text(label),
-        ],
-      ),
+      child: Column(children: [Icon(icon, size: 40), Text(label)]),
     );
   }
 }

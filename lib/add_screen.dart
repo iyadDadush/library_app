@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:library_app/appbar.dart';
 import 'package:library_app/obscured_text_field_sample.dart';
+import 'package:library_app/db/controller.dart';
 
 class AddScreen extends StatefulWidget {
   // تغيير إلى StatefulWidget
@@ -31,7 +32,7 @@ class _AddScreenState extends State<AddScreen> {
     );
     if (pickedDate != null) {
       controller.text =
-          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+          "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
     }
   }
 
@@ -66,13 +67,44 @@ class _AddScreenState extends State<AddScreen> {
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      // عند الضغط على الزر يمكن إضافة وظيفة للحفظ أو أي شيء آخر
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Data saved successfully'),
-                        ),
-                      );
+                    onPressed: () async {
+                      // Save the book to local DB
+                      try {
+                        final borrow = _getDateController.text.isNotEmpty
+                            ? DateTime.parse(_getDateController.text)
+                            : null;
+                        final back = _backDateController.text.isNotEmpty
+                            ? DateTime.parse(_backDateController.text)
+                            : null;
+
+                        await addBook({
+                          'StudentName': _studentNameController.text,
+                          'BookName': _bookNameController.text,
+                          'BookCode': _bookCodeController.text.isNotEmpty
+                              ? _bookCodeController.text
+                              : null,
+                          'BorrowDate': borrow,
+                          'ReturnDate': back,
+                        });
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Data saved successfully'),
+                          ),
+                        );
+
+                        setState(() {
+                          _studentNameController.clear();
+                          _bookNameController.clear();
+                          _bookCodeController.clear();
+                          _getDateController.clear();
+                          _backDateController.clear();
+                        });
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Error saving data')),
+                        );
+                      }
                     },
                     child: const Text('Save', style: TextStyle(fontSize: 18)),
                     style: ElevatedButton.styleFrom(

@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final String _correctPassword = '123';
+  final String _correctPassword = '1234';
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -20,7 +20,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ObscuredTextFieldSample(labelText: "Password",controller: _passwordController),
+            ObscuredTextFieldSample(
+              labelText: "Password",
+              controller: _passwordController,
+            ),
             const SizedBox(height: 20),
             TextButton(
               style: TextButton.styleFrom(
