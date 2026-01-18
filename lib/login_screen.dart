@@ -34,17 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              decoration: const InputDecoration(
-                hintText: 'كلمة السر...',
-
-                border: OutlineInputBorder(),
-              ),
-              onSubmitted: (_) {
-                checkpassword(_passwordController, _correctPassword, context);
-              },
-              controller: _passwordController,
-            ),
+            ObscuredTextFieldSample(controller: _passwordController, labelText: 'كلمة المرور...'),
             const SizedBox(height: 20),
             TextButton(
               style: TextButton.styleFrom(
