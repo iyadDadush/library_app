@@ -9,6 +9,20 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+checkpassword(_passwordController, _correctPassword, context) {
+  // Add password checking logic here
+  if (_passwordController.text == _correctPassword) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  } else {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('THE PASSWORD IS INCORRECT')));
+  }
+}
+
 class _LoginScreenState extends State<LoginScreen> {
   final String _correctPassword = '1234';
   final TextEditingController _passwordController = TextEditingController();
@@ -20,8 +34,15 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ObscuredTextFieldSample(
-              labelText: "Password",
+            TextField(
+              decoration: const InputDecoration(
+                hintText: 'كلمة السر...',
+
+                border: OutlineInputBorder(),
+              ),
+              onSubmitted: (_) {
+                checkpassword(_passwordController, _correctPassword, context);
+              },
               controller: _passwordController,
             ),
             const SizedBox(height: 20),
@@ -35,16 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                if (_passwordController.text == _correctPassword) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('THE PASSWORD IS INCORRECT')),
-                  );
-                }
+                checkpassword(_passwordController, _correctPassword, context);
               },
               child: const Text('Login'),
             ),
